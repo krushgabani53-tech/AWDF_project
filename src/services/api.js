@@ -23,6 +23,19 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor to clear token on 401 Unauthorized
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('slate_auth_token');
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const checkBackendHealth = async () => {
   try {
     const response = await api.get('/health');

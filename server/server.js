@@ -23,9 +23,11 @@ app.use(
     origin: (origin, callback) => {
       // allow requests with no origin (like mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
-      // allow localhost and 127.0.0.1 on any port or matching CLIENT_URL
+      // allow localhost, 127.0.0.1, Vercel deployments, or matching CLIENT_URL
       if (
         /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('vercel.app') ||
         origin === CLIENT_URL
       ) {
         return callback(null, true);

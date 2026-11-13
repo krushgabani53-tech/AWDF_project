@@ -8,8 +8,18 @@ if (!connectionString) {
   console.error('DATABASE_URL environment variable is not defined.');
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
+const isCloudDb =
+  Boolean(connectionString) &&
+  (connectionString.includes('render.com') ||
+    connectionString.includes('neon.tech') ||
+    connectionString.includes('supabase') ||
+    connectionString.includes('amazonaws.com') ||
+    isProduction);
+
 const pool = new Pool({
   connectionString: connectionString,
+  ssl: isCloudDb ? { rejectUnauthorized: false } : false,
 });
 
 pool.on('error', (err) => {
