@@ -1,14 +1,10 @@
 import axios from 'axios';
 
-// Detect whether running locally or in cloud production (e.g. Vercel)
-const isLocalhost =
-  typeof window !== 'undefined' &&
-  (window.location.hostname === 'localhost' ||
-    window.location.hostname === '127.0.0.1');
+// Globally fixed Backend API URL
+export const BACKEND_API_URL = 'https://awdf-project.onrender.com/api';
 
 const api = axios.create({
-  // baseURL: isLocalhost ? '/api' : 'https://awdf-project.onrender.com/api',
-  baseURL: 'https://awdf-project.onrender.com/api',
+  baseURL: BACKEND_API_URL,
   timeout: 15000,
   withCredentials: true,
   headers: {
