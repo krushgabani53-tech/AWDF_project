@@ -3,7 +3,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // CLIENT_URL can hold one or many origins, comma-separated:
 // CLIENT_URL=https://awdf1project.vercel.app,http://localhost:5173
-const ALLOWED_ORIGINS = (process.env.CLIENT_URL || 'http://localhost:5173')
+const ALLOWED_ORIGINS = ("https://awdf-project.onrender.com")
   .split(',')
   .map((url) => url.trim().replace(/\/$/, '')) // trim spaces and trailing slash
   .filter(Boolean);
