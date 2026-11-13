@@ -4,7 +4,7 @@ import axios from 'axios';
 export const BACKEND_API_URL = 'https://awdf-project.onrender.com/api';
 
 const api = axios.create({
-  baseURL: BACKEND_API_URL,
+  baseURL: B ACKEND_API_URL,
   timeout: 15000,
   withCredentials: true,
   headers: {
