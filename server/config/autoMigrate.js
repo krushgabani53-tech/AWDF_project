@@ -140,3 +140,4 @@ async function autoMigrate(pool) {
 }
 
 module.exports = { autoMigrate };
+

@@ -1,11 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/api/:match*",
-      "destination": "https://awdf-project.onrender.com/api/:match*"
+      "source": "/api/(.*)",
+      "destination": "https://awdf-project.onrender.com/api/$1"
     },
     {
-      "source": "/((?!api/).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
