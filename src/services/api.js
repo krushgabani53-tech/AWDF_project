@@ -7,7 +7,8 @@ const isLocalhost =
     window.location.hostname === '127.0.0.1');
 
 const api = axios.create({
-  baseURL: isLocalhost ? '/api' : 'https://awdf-project.onrender.com/api',
+  // baseURL: isLocalhost ? '/api' : 'https://awdf-project.onrender.com/api',
+  baseURL: 'https://awdf-project.onrender.com/api',
   timeout: 15000,
   withCredentials: true,
   headers: {
