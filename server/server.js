@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const { testConnection } = require('./config/database');
+const { testConnection, pool } = require('./config/database');
+const { autoMigrate } = require('./config/autoMigrate');
 const healthRoutes = require('./routes/health');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
@@ -89,5 +90,6 @@ app.listen(PORT, '0.0.0.0', async () => {
   console.log(`===============================================`);
 
   await testConnection();
+  await autoMigrate(pool);
 });
 

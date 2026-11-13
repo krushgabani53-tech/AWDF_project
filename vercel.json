@@ -1,9 +1,12 @@
 {
   "rewrites": [
     {
+      "source": "/api/:match*",
+      "destination": "https://awdf-project.onrender.com/api/:match*"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]
 }
-
