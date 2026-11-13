@@ -1,14 +1,29 @@
 import axios from 'axios';
 
-// Use relative '/api' so it seamlessly proxies through Vite dev server without CORS issues,
-// with graceful fallback if accessed outside the proxy.
+// Detect whether running locally or in cloud production (e.g. Vercel)
+const isLocalhost =
+  typeof window !== 'undefined' &&
+  (window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1');
+
 const api = axios.create({
-  baseURL: '/api',
-  timeout: 10000,
+  baseURL: isLocalhost ? '/api' : 'https://awdf-project.onrender.com/api',
+  timeout: 15000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+// Attach Authorization header if JWT token exists in localStorage (dual cookie + token support)
+api.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('slate_auth_token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+  }
+  return config;
 });
 
 export const checkBackendHealth = async () => {

@@ -31,6 +31,9 @@ export function AuthProvider({ children }) {
   const login = async (email, password, remember_me) => {
     const data = await authService.login({ email, password, remember_me });
     if (data && data.success && data.user) {
+      if (data.token && typeof window !== 'undefined') {
+        localStorage.setItem('slate_auth_token', data.token);
+      }
       setUser(data.user);
       return data.user;
     }
@@ -41,6 +44,9 @@ export function AuthProvider({ children }) {
   const register = async (userData) => {
     const data = await authService.register(userData);
     if (data && data.success && data.user) {
+      if (data.token && typeof window !== 'undefined') {
+        localStorage.setItem('slate_auth_token', data.token);
+      }
       setUser(data.user);
       return data.user;
     }
@@ -52,6 +58,9 @@ export function AuthProvider({ children }) {
     try {
       await authService.logout();
     } finally {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('slate_auth_token');
+      }
       setUser(null);
     }
   };

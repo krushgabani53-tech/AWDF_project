@@ -127,10 +127,11 @@ router.post('/register', async (req, res, next) => {
     );
 
     // Set HTTP-only cookie
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -146,6 +147,7 @@ router.post('/register', async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: 'Registration successful',
+      token,
       user: {
         id: newUser.id,
         name: newUser.full_name || newUser.name,
@@ -234,10 +236,11 @@ router.post('/login', async (req, res, next) => {
     );
 
     // Set HTTP-only cookie
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: maxAgeMs,
     });
 
@@ -253,6 +256,7 @@ router.post('/login', async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'Login successful',
+      token,
       user: {
         id: user.id,
         name: user.full_name || user.name,
@@ -279,10 +283,11 @@ router.post('/logout', optionalAuth, async (req, res) => {
     });
   }
 
+  const isProduction = process.env.NODE_ENV === 'production';
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
   });
 
   res.status(200).json({
